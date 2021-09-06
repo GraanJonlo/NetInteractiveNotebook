@@ -1,0 +1,83 @@
+#!markdown
+
+# .NET Interactive Notebook example
+
+## Markdowm support
+
+* Bullet 1
+* Bullet 2
+
+Table:
+
+| A | B | C |
+|---|---|---|
+| 0 | 1 | 2 |
+
+Including links to other cells! (Theoretically :( )
+[Load external code](##load-external-code)
+
+#!markdown
+
+## Code support
+
+#!fsharp
+
+[1..5]
+
+#!markdown
+
+## More complicated code support
+
+#!fsharp
+
+let random = System.Random()
+
+let data = [
+    for i in 1..5 do
+        {|
+            Name = sprintf "Item %i" i
+            ``Some random number`` = random.Next()
+            Time = System.DateTime.Now
+        |}
+]
+
+data
+
+#!markdown
+
+## Load and use Nuget packages
+
+#!fsharp
+
+#r "nuget: XPlot.Plotly"
+#r "nuget: XPlot.Plotly.Interactive"
+
+#!fsharp
+
+open XPlot.Plotly
+
+[ "Pizza remaining", 3; "Pizza eaten", 5 ]
+|> Chart.Pie
+
+#!markdown
+
+## Use data from previous cells
+
+#!fsharp
+
+data
+
+#!markdown
+
+## Load external code
+
+#!fsharp
+
+#load "Example.fs"
+
+Say.hello "World"
+
+#!fsharp
+
+[ for x in -2. .. 0.1 .. 5. -> sin x ]
+|> Chart.Line
