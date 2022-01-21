@@ -81,3 +81,47 @@ Say.hello "World"
 
 [ for x in -2. .. 0.1 .. 5. -> sin x ]
 |> Chart.Line
+
+#!markdown
+
+## Connect to SQL Server
+
+#!csharp
+
+#r "nuget: Microsoft.DotNet.Interactive.SqlServer, 1.0.0-beta.*"
+
+#!csharp
+
+#!connect -h
+
+#!csharp
+
+#!connect mssql -h
+
+#!csharp
+
+#!connect mssql --kernel-name testytesty "Server=localhost;Database=testytesty;Integrated Security=True"
+
+#!sql
+
+#!sql-testytesty
+
+SELECT WidgetId, Name, NoInStock
+FROM dbo.Widget
+WHERE Deleted = 0;
+
+#!csharp
+
+int mustHaveAtLeast;
+
+while(!int.TryParse(await GetInputAsync("How many must have at least?"), out mustHaveAtLeast))
+{}
+
+#!sql
+
+#!sql-testytesty
+#!share --from csharp mustHaveAtLeast
+
+SELECT WidgetId, Name, NoInStock
+FROM dbo.Widget
+WHERE Deleted = 0 AND NoInStock >= @mustHaveAtLeast;
